@@ -45,4 +45,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Método con formato incorrecto
+    public function test(){
+        echo 'Error test';
+    }
+    
 }

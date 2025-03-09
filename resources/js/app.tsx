@@ -4,8 +4,10 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
+import { Prueba } from './prueba';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const number: number = "Esto debería ser un número";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -19,6 +21,11 @@ createInertiaApp({
         color: '#4B5563',
     },
 });
+
+// Error de sintaxis: falta el paréntesis de cierre
+function test() {
+    console.log("Test";
+}
 
 // This will set light / dark mode on load...
 initializeTheme();
