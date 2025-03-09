@@ -45,10 +45,6 @@ jobs:
           cp .env.example .env
           php artisan key:generate
 
-      # Construir assets frontend
-      - name: 🏗️ Compilar assets
-        run: npm run build
-
       # Formatear código con Pint y Prettier
       - name: 🧹 Ejecutar Laravel Pint
         run: vendor/bin/pint
