@@ -2,29 +2,68 @@ name: Code Quality Checks
 
 on:
   push:
-    branches: [develop]
+    branches:
+      - develop
+      - main
   pull_request:
-    branches: [develop]
+    branches:
+      - develop
+      - main
 
 jobs:
-  quality-check:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
       - name: 📥 Clonar el repositorio
         uses: actions/checkout@v4
 
-      - name: 📦 Instalar dependencias de Composer
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+      # Setup PHP
+      - name: ⚙️ Configurar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+          coverage: xdebug
 
-      - name: 📦 Instalar dependencias de Node.js
-        run: npm install
+      # Setup Node.js
+      - name: ⚙️ Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
 
+      # Instalar dependencias
+      - name: 📦 Instalar dependencias
+        run: |
+          composer install --no-interaction --prefer-dist --optimize-autoloader
+          npm ci
+
+      # Preparar Laravel
+      - name: ⚡ Configurar Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      # Construir assets frontend
+      - name: 🏗️ Compilar assets
+        run: npm run build
+
+      # Formatear código con Pint y Prettier
       - name: 🧹 Ejecutar Laravel Pint
         run: vendor/bin/pint
 
-      - name: ✨ Ejecutar ESLint
+      - name: ✨ Ejecutar Prettier
+        run: npm run format
+
+      # Linting con ESLint
+      - name: 🔍 Ejecutar ESLint
         run: npm run lint
 
+      # Compilar TypeScript
       - name: 🛠️ Compilar TypeScript
         run: npx tsc --noEmit
+
+      # Ejecutar pruebas
+      - name: ✅ Ejecutar pruebas con PHPUnit
+        run: ./vendor/bin/phpunit
