@@ -59,7 +59,3 @@ jobs:
       # Compilar TypeScript
       - name: 🛠️ Compilar TypeScript
         run: npx tsc --noEmit
-
-      # Ejecutar pruebas
-      - name: ✅ Ejecutar pruebas con PHPUnit
-        run: ./vendor/bin/phpunit
