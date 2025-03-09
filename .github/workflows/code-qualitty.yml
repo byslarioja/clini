@@ -1,0 +1,30 @@
+name: Code Quality Checks
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [develop]
+
+jobs:
+  quality-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Clonar el repositorio
+        uses: actions/checkout@v4
+
+      - name: 📦 Instalar dependencias de Composer
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: 📦 Instalar dependencias de Node.js
+        run: npm install
+
+      - name: 🧹 Ejecutar Laravel Pint
+        run: vendor/bin/pint
+
+      - name: ✨ Ejecutar ESLint
+        run: npm run lint
+
+      - name: 🛠️ Compilar TypeScript
+        run: npx tsc --noEmit
