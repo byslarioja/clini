@@ -1,29 +1,49 @@
 name: Code Quality Checks
 
 on:
-  push:
-    branches: [develop]
   pull_request:
-    branches: [develop]
+    branches:
+      - develop
+      - main
 
 jobs:
-  quality-check:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
       - name: 📥 Clonar el repositorio
         uses: actions/checkout@v4
 
-      - name: 📦 Instalar dependencias de Composer
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+      - name: ⚙️ Configurar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+          coverage: xdebug
 
-      - name: 📦 Instalar dependencias de Node.js
-        run: npm install
+      - name: ⚙️ Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          
+      - name: 📦 Instalar dependencias
+        run: |
+          composer install --no-interaction --prefer-dist --optimize-autoloader
+          npm ci
+
+      - name: ⚡ Configurar Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate
 
       - name: 🧹 Ejecutar Laravel Pint
         run: vendor/bin/pint
 
-      - name: ✨ Ejecutar ESLint
+      - name: ✨ Ejecutar Prettier
+        run: npm run format
+
+      - name: 🔍 Ejecutar ESLint
         run: npm run lint
 
       - name: 🛠️ Compilar TypeScript
