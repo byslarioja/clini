@@ -11,51 +11,52 @@ on:
       - main
 
 jobs:
-  ci:
+  ci.backend:
     runs-on: ubuntu-latest
 
     steps:
       - name: 📥 Clonar el repositorio
         uses: actions/checkout@v4
 
-      # Setup PHP
       - name: ⚙️ Configurar PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           tools: composer:v2
           coverage: xdebug
+          
+      - name: 📦 Instalar dependencias
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
-      # Setup Node.js
+      - name: ⚡ Configurar Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: 🧹 Ejecutar Laravel Pint
+        run: vendor/bin/pint
+
+  ci.frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Clonar el repositorio
+        uses: actions/checkout@v4
+
       - name: ⚙️ Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
 
-      # Instalar dependencias
       - name: 📦 Instalar dependencias
-        run: |
-          composer install --no-interaction --prefer-dist --optimize-autoloader
-          npm ci
-
-      # Preparar Laravel
-      - name: ⚡ Configurar Laravel
-        run: |
-          cp .env.example .env
-          php artisan key:generate
-
-      # Formatear código con Pint y Prettier
-      - name: 🧹 Ejecutar Laravel Pint
-        run: vendor/bin/pint
+        run: npm ci
 
       - name: ✨ Ejecutar Prettier
         run: npm run format
 
-      # Linting con ESLint
       - name: 🔍 Ejecutar ESLint
         run: npm run lint
 
-      # Compilar TypeScript
       - name: 🛠️ Compilar TypeScript
         run: npx tsc --noEmit
