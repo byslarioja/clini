@@ -2,7 +2,8 @@
 
 namespace App\Enums;
 
-enum AppointmentState {
+enum AppointmentState
+{
     case Completado;
     case Cancelado;
     case Pendiente;
