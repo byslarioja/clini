@@ -3,7 +3,7 @@
 namespace App\Enums;
 
 enum Role {
-    Administrador;
-    Profesional;
-    Secretaria;
+    case Administrador;
+    case Profesional;
+    case Secretaria;
 }

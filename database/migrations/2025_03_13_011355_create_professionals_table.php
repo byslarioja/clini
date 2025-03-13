@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('practices', function (Blueprint $table) {
+        Schema::create('professionals', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('logo');
+            $table->string('dni');
+            $table->string('mu');
             $table->string('phone');
-            $table->foreignId('address_id')->constrained();
+            $table->foreignId('specialty_id')->constrained();
             $table->timestamps();
         });
     }
