@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('duration');
             $table->string('reason');
-            $table->dateTime('date_time');
+            $table->date('date');
+            $table->time('time')->nullable();
             $table->foreignId('professional_id')->constrained();
             $table->foreignId('patient_id')->constrained();
-            $table->foreignId('appointment_state_id')->constrained();
             $table->timestamps();
         });
     }
