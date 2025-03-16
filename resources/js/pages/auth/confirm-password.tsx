@@ -23,7 +23,7 @@ export default function ConfirmPassword() {
     };
 
     return (
-        <AuthLayout title="Confirm your password" description="Confirme su contraseña antes de continuar.">
+        <AuthLayout title="Confirme su contraseña" description="Confirme su contraseña antes de continuar.">
             <Head title="Confirmar contraseña" />
 
             <form onSubmit={submit}>

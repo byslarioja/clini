@@ -87,7 +87,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             onClick={() => setData('remember', !data.remember)}
                             tabIndex={3}
                         />
-                        <Label htmlFor="remember">Recuérdeme</Label>
+                        <Label htmlFor="remember">Recuérdame</Label>
                     </div>
 
                     <Button type="submit" className="mt-4 w-full" tabIndex={4} disabled={processing}>
@@ -97,7 +97,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                 </div>
 
                 <div className="text-muted-foreground text-center text-sm">
-                    ¿No tienes cuenta?{' '}
+                    ¿No tienes una cuenta?{' '}
                     <TextLink href={route('register')} tabIndex={5}>
                         Registrarse
                     </TextLink>
