@@ -45,6 +45,11 @@ class PracticeController extends Controller
             ]);
         });
 
-        return back();
+        return back()->with([
+            'message' => [
+                'content' => 'Consultorio actualizado con éxito',
+                'type' => 'success',
+            ],
+        ]);
     }
 }
