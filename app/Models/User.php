@@ -45,4 +45,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<Professional, $this>
+     */
+    public function professional(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Professional::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Practice, $this>
+     */
+    public function practices(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Practice::class);
+    }
 }
