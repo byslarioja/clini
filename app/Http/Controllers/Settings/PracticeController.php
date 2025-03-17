@@ -19,7 +19,7 @@ class PracticeController extends Controller
             ->with(['address'])
             ->whereHas('users', function ($query) use ($user) {
                 return $query->where('users.id', $user->id);
-            })->first();
+            })->first(); // TODO: choose criteria to get current practice
 
         return Inertia::render('settings/practice', [
             'practice' => $practice,

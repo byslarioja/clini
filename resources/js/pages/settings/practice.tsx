@@ -51,6 +51,7 @@ export default function Practice({ practice }: { practice: Practice & { address:
                     address_line_input.current?.focus();
                 }
             },
+            fresh: true,
         });
     };
 
