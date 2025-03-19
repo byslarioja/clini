@@ -24,7 +24,7 @@ export default function Practice({ practice }: { practice: Practice & { address:
     const name_input = useRef<HTMLInputElement>(null);
     const phone_input = useRef<HTMLInputElement>(null);
     const address_line_input = useRef<HTMLInputElement>(null);
-    const { data, setData, errors, put, reset, processing, recentlySuccessful } = useForm({
+    const { data, setData, errors, put, processing, recentlySuccessful } = useForm({
         name: practice.name,
         phone: practice.phone,
         address_line: practice.address.address_line,
@@ -37,21 +37,17 @@ export default function Practice({ practice }: { practice: Practice & { address:
             preserveScroll: true,
             onError: (errors) => {
                 if (errors.name) {
-                    reset('name');
                     name_input.current?.focus();
                 }
 
                 if (errors.phone) {
-                    reset('phone');
                     phone_input.current?.focus();
                 }
 
                 if (errors.address_line) {
-                    reset('address_line');
                     address_line_input.current?.focus();
                 }
             },
-            fresh: true,
         });
     };
 
