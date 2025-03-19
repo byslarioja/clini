@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->string('address_line');
-            $table->string('city');
-            $table->string('country');
+            $table->string('city')->default('La Rioja');
+            $table->string('country')->default('Argentina');
             $table->timestamps();
         });
     }
