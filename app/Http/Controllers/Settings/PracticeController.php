@@ -30,7 +30,7 @@ class PracticeController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:10', 'size:10'],
+            'phone' => ['required', 'string', 'digits:10'],
             'address_line' => ['required', 'string', 'max:255'],
         ]);
 
