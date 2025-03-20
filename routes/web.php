@@ -13,5 +13,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-require __DIR__.'/backoffice/settings.php';
+require __DIR__.'/backoffice/app.php';
 require __DIR__.'/backoffice/auth.php';
+require __DIR__.'/backoffice/settings.php';

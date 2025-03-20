@@ -1,0 +1,88 @@
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { PaginationNav } from '@/features/pagination-nav';
+import { Searchbar } from '@/features/searchbar';
+import AppLayout from '@/layouts/app-layout';
+import { Paginated, type BreadcrumbItem } from '@/types';
+import { Head, Link } from '@inertiajs/react';
+import { Edit2, Trash } from 'lucide-react';
+
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Panel de control',
+        href: route('dashboard'),
+    },
+    {
+        title: 'Pacientes',
+        href: route('patients.index'),
+    },
+];
+
+interface Patient {
+    id: number;
+    name: string;
+    phone: string;
+    sex: string;
+    dni: string;
+    dob: string;
+}
+
+export default function Patients({ patients }: Paginated<Patient>) {
+    return (
+        <AppLayout breadcrumbs={breadcrumbs}>
+            <Head title="Pacientes" />
+            <div className="mb-4 flex justify-between px-6 py-8 md:px-4">
+                <Searchbar indexRoute="patients.index" />
+
+                {/* <Button asChild>
+                        <Link href={route('stockables.create')}>
+                            <Plus />
+                            Agregar stockeable
+                        </Link>
+                    </Button> */}
+            </div>
+            <main className="max-w-screen items-center px-6 py-8 md:px-4">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Nombre</TableHead>
+                            <TableHead>Teléfono</TableHead>
+                            <TableHead>Sexo</TableHead>
+                            <TableHead>Documento</TableHead>
+                            <TableHead>Fecha de nacimiento</TableHead>
+                            <TableHead>Acciones</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {patients.data.map((patient) => (
+                            <TableRow key={patient.id}>
+                                <TableCell>{patient.name}</TableCell>
+                                <TableCell>{patient.phone}</TableCell>
+                                <TableCell>{patient.sex}</TableCell>
+                                <TableCell>{patient.dni}</TableCell>
+                                <TableCell>{patient.dob}</TableCell>
+                                <TableCell className="flex gap-2">
+                                    <Link
+                                        className={buttonVariants({
+                                            variant: 'warning',
+                                            size: 'sm',
+                                        })}
+                                        href={route('home')}
+                                    >
+                                        <Edit2 />
+                                    </Link>
+                                    <Button size={'sm'} variant={'destructive'} onClick={() => console.log('combo')}>
+                                        <Trash />
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                    <TableCaption>
+                        <PaginationNav links={patients.meta.links} />
+                    </TableCaption>
+                </Table>
+            </main>
+        </AppLayout>
+    );
+}
