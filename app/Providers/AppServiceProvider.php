@@ -3,7 +3,10 @@
 namespace App\Providers;
 
 use App\Models\User;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
@@ -29,6 +32,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->configureURLs();
 
+        $this->configureDates();
+
+        $this->configureCommands();
+
         Gate::define('viewPulse', function (User $user) {
             return $user->email === 'sntlln.93@gmail.com';
         });
@@ -36,30 +43,36 @@ class AppServiceProvider extends ServiceProvider
         $this->configureVite();
     }
 
-    private function configureVite()
+    private function configureVite(): void
     {
         Vite::useAggressivePrefetching();
     }
 
-    private function configureURLs()
+    private function configureURLs(): void
     {
         if ($this->isProduction()) {
             URL::forceScheme('https');
         }
     }
 
-    private function configureCommands()
+    private function configureCommands(): void
     {
         DB::prohibitDestructiveCommands($this->isProduction());
     }
 
-    private function configureModels()
+    private function configureModels(): void
     {
         Model::shouldBeStrict();
         Model::unguard();
     }
 
-    private function isProduction()
+    private function configureDates(): void
+    {
+        Carbon::setLocale('es');
+        Date::use(CarbonImmutable::class);
+    }
+
+    private function isProduction(): bool
     {
         return $this->app->environment() === 'production';
     }
