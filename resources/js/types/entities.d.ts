@@ -12,3 +12,12 @@ export interface Address {
     city: string;
     country: string;
 }
+
+export interface Patient {
+    id: number;
+    name: string;
+    phone: string;
+    sex: string;
+    dni: string;
+    dob: string;
+}
