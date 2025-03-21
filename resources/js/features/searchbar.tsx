@@ -1,29 +1,21 @@
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import table from '@/lib/services/table';
 import { cn } from '@/lib/utils';
 import { router } from '@inertiajs/react';
 import { FilterX, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
-
-function onSearch(searchTerm: string, indexRoute: string) {
-    const query = route().queryParams;
-    delete query.search;
-
-    if (searchTerm) {
-        query.search = searchTerm;
-    }
-
-    router.get(route(indexRoute), query, { preserveState: true });
-}
+import { useDebounceValue } from 'usehooks-ts';
 
 export function Searchbar({ indexRoute }: { indexRoute: string }) {
     const [search, setSearch] = useState('');
+    const [debouncedValue] = useDebounceValue(search, 500);
 
     useEffect(() => {
-        if (search.length < 3) return;
+        if (debouncedValue.length < 3) return;
 
-        onSearch(search, indexRoute);
-    }, [search, indexRoute]);
+        table.search(debouncedValue, indexRoute);
+    }, [debouncedValue, indexRoute]);
 
     return (
         <div className="relative flex gap-1">
