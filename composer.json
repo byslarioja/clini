@@ -39,7 +39,9 @@
         }
     },
     "scripts": {
+        "check:ci": "vendor/bin/pint --test && vendor/bin/phpstan && npm run lint && npm run format:check && npm run types",
         "pint": "vendor/bin/pint",
+        "phpstan": "vendor/bin/phpstan",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
