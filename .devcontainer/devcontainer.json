@@ -18,7 +18,8 @@
                 "usernamehw.errorlens",
                 "eamodio.gitlens",
                 "dbaeumer.vscode-eslint",
-                "sanderronde.phpstan-vscode"
+                "sanderronde.phpstan-vscode",
+                "MylesMurphy.prettify-ts"
             ],
             "settings": {}
         }

@@ -3,14 +3,19 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { LayoutGrid } from 'lucide-react';
+import { LayoutGrid, User } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Panel de control',
-        url: '/dashboard',
+        url: route('dashboard'),
         icon: LayoutGrid,
+    },
+    {
+        title: 'Pacientes',
+        url: route('patients.index'),
+        icon: User,
     },
 ];
 

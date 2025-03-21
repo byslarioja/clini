@@ -38,10 +38,13 @@ jobs:
           php artisan key:generate
 
       - name: 🧹 Ejecutar Laravel Pint
-        run: vendor/bin/pint
+        run: vendor/bin/pint --test
+
+      - name: 🧹 Ejecutar PHPStan
+        run: vendor/bin/phpstan
 
       - name: ✨ Ejecutar Prettier
-        run: npm run format
+        run: npm run format:check
 
       - name: 🔍 Ejecutar ESLint
         run: npm run lint

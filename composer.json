@@ -17,6 +17,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^3.0",
         "laravel-lang/lang": "^15.19",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.18",
@@ -38,14 +39,15 @@
         }
     },
     "scripts": {
+        "check:ci": "vendor/bin/pint --test && vendor/bin/phpstan && npm run lint && npm run format:check && npm run types",
         "pint": "vendor/bin/pint",
+        "phpstan": "vendor/bin/phpstan",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
-            "@php artisan lang:update"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""

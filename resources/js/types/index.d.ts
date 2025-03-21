@@ -40,3 +40,31 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+export interface PaginatedLink {
+    url: string;
+    label: string;
+    active: boolean;
+}
+
+export interface Paginated<T> {
+    [k: string]: {
+        data: T[];
+        meta: {
+            current_page: number;
+            from: number;
+            last_page: number;
+            links: PaginatedLink[];
+            path: string;
+            per_page: number;
+            to: number;
+            total: number;
+        };
+        links: {
+            first_page_url: string;
+            last_page_url: string;
+            next_page_url: string | null;
+            prev_page_url: string | null;
+        };
+    };
+}
