@@ -17,7 +17,7 @@ export function Searchbar({ indexRoute }: { indexRoute: string }) {
 
     return (
         <div className="relative flex gap-1">
-            <Input id="search" name="search" value={search} onChange={(e) => setSearch(e.target.value)} />
+            <Input id="search" name="search" placeholder="Buscar" value={search} onChange={(e) => setSearch(e.target.value)} />
             <div
                 className={cn(
                     buttonVariants({
