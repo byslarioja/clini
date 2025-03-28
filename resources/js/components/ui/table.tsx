@@ -1,6 +1,6 @@
 import * as React from "react"
-
 import { cn } from "@/lib/utils"
+import Highlightable from "@/components/highlightable"
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
@@ -76,7 +76,11 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
   )
 }
 
-function TableCell({ className, ...props }: React.ComponentProps<"td">) {
+interface TableCellProps extends React.ComponentProps<"td"> {
+  highlight?: string; 
+}
+
+function TableCell({ className, highlight, children, ...props }: TableCellProps) {
   return (
     <td
       data-slot="table-cell"
@@ -85,8 +89,14 @@ function TableCell({ className, ...props }: React.ComponentProps<"td">) {
         className
       )}
       {...props}
-    />
-  )
+    >
+      { highlight ? (
+        <Highlightable text={String(children)} toHighlight={highlight} />
+      ) : (
+        children
+      )}
+    </td>
+  );
 }
 
 function TableCaption({

@@ -21,6 +21,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Patients({ patients }: Paginated<Patient>) {
+    const filter = new URLSearchParams(window.location.search).get('filter') || '';
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Pacientes" />
@@ -51,10 +53,10 @@ export default function Patients({ patients }: Paginated<Patient>) {
                     <TableBody>
                         {patients.data.map((patient) => (
                             <TableRow key={patient.id}>
-                                <TableCell>{patient.name}</TableCell>
-                                <TableCell>{patient.phone}</TableCell>
+                                <TableCell highlight={filter}>{patient.name}</TableCell>
+                                <TableCell highlight={filter}>{patient.phone}</TableCell>
                                 <TableCell>{patient.sex}</TableCell>
-                                <TableCell>{patient.dni}</TableCell>
+                                <TableCell highlight={filter}>{patient.dni}</TableCell>
                                 <TableCell>{patient.dob}</TableCell>
                                 <TableCell className="flex gap-2">
                                     <Link
