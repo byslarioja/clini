@@ -1,29 +1,30 @@
 import { router } from '@inertiajs/react';
 
-function search(searchTerm: string, indexRoute: string) {
-    const query = route().queryParams;
-    delete query.filter;
+function _getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return params;
+}
 
-    if (searchTerm) {
-        query.filter = searchTerm;
+function search(searchTerm: string, indexRoute: string) {
+    const query = _getQueryParams();
+    query.delete('filter');
+
+    if (searchTerm.length) {
+        query.set('filter', searchTerm);
     }
 
-    router.get(route(indexRoute), query, { preserveState: true });
+    router.get(route(indexRoute), Object.fromEntries(query.entries()), { preserveState: true });
 }
 
 function sort(sort_column: string, indexRoute: string) {
-    const sort_order = route().queryParams.sort_order === 'desc' ? 'asc' : 'desc';
-    const query = route().queryParams;
+    const query = _getQueryParams();
+    const currentSortOrder = query.get('sort_order') || 'desc';
+    const sort_order = currentSortOrder === 'desc' ? 'asc' : 'desc';
 
-    router.get(
-        route(indexRoute),
-        {
-            ...query,
-            sort_order,
-            sort_column,
-        },
-        { preserveState: true },
-    );
+    query.set('sort_order', sort_order);
+    query.set('sort_column', sort_column);
+
+    router.get(route(indexRoute), Object.fromEntries(query.entries()), { preserveState: true });
 }
 
 const table = {

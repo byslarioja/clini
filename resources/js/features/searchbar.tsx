@@ -12,8 +12,6 @@ export function Searchbar({ indexRoute }: { indexRoute: string }) {
     const [debouncedValue] = useDebounceValue(search, 500);
 
     useEffect(() => {
-        if (debouncedValue.length < 3) return;
-
         table.search(debouncedValue, indexRoute);
     }, [debouncedValue, indexRoute]);
 
