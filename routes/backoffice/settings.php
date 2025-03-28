@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Settings\PasswordController;
-use App\Http\Controllers\Settings\PracticeController;
-use App\Http\Controllers\Settings\ProfileController;
+use App\Http\Controllers\Backoffice\Settings\PasswordController;
+use App\Http\Controllers\Backoffice\Settings\PracticeController;
+use App\Http\Controllers\Backoffice\Settings\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 

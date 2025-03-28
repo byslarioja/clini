@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Practice extends Model
 {
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Address, $this>;
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Address, $this>
      */
     public function address(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -15,7 +15,7 @@ class Practice extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User, $this>;
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User, $this>
      */
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
