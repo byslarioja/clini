@@ -19,5 +19,12 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        $this->call([
+            \Database\Seeders\Patients\Table::class,
+            \Database\Seeders\Specialties\SpecialtySeeder::class,
+            \Database\Seeders\Professionals\ProfessionalSeeder::class,
+            \Database\Seeders\Settings\PracticeSeeder::class,
+        ]);
     }
 }

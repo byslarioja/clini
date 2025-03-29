@@ -21,3 +21,13 @@ export interface Patient {
     dni: string;
     dob: string;
 }
+
+export interface Professional {
+    id: number;
+    name?: string;
+    dni: string;
+    mu: string;
+    phone: string;
+    specialty_id: number;
+    user_id: number;
+}
