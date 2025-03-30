@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('reason');
             $table->date('date');
             $table->time('time')->nullable();
+            $table->string('phone');
             $table->foreignId('professional_id')->constrained();
             $table->foreignId('patient_id')->constrained();
             $table->timestamps();
