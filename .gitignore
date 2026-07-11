@@ -24,3 +24,7 @@ yarn-error.log
 /.vscode
 /.zed
 nohup.out
+# .claude: only skills are tracked; local settings and working docs stay out
+/.claude/*
+!/.claude/skills
+!/.claude/settings.json
