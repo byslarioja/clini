@@ -32,3 +32,16 @@ jobs:
       # underlying framework (PHPUnit today).
       - name: 🧪 Tests
         run: php artisan test
+
+  tests_frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Clone repo
+        uses: actions/checkout@v7
+
+      - name: ⚙️ Node.js + npm
+        uses: ./.github/actions/setup-node
+
+      - name: 🧪 Vitest
+        run: npm run test

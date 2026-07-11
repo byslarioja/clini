@@ -31,9 +31,14 @@ App at <http://localhost> (whatever `APP_PORT` is set to locally). `/` is the pu
 ./vendor/bin/sail php artisan test
 ./vendor/bin/sail php artisan test tests/Feature/DashboardTest.php                      # one file
 ./vendor/bin/sail php artisan test --filter=test_guests_are_redirected_to_the_login_page  # one test
+
+# Frontend — Vitest (jsdom + Testing Library). *.test.ts(x) colocated next to the code under resources/js;
+# global setup + matchMedia mock live in resources/js/tests/setup.ts (config: vitest.config.ts).
+./vendor/bin/sail npm run test
+./vendor/bin/sail npm run test -- resources/js/lib/utils.test.ts   # one file
 ```
 
-Pest is **not** installed (the `pestphp/pest` strings in `composer.lock` are other packages' transitive constraints). `php artisan test` is the canonical command and stays correct if Pest is added later. Frontend (Vitest) and E2E (Playwright) suites are **not wired yet** — they are the current migration target (below); the `sail npm run test` / `npm run test:e2e` commands the skills mention will fail until that tooling lands.
+Pest is **not** installed (the `pestphp/pest` strings in `composer.lock` are other packages' transitive constraints). `php artisan test` is the canonical command and stays correct if Pest is added later. E2E (Playwright) is **not wired yet** — it is the last remaining migration step (below); the `npm run test:e2e` command the skills mention will fail until that tooling lands.
 
 ### Quality
 
@@ -68,7 +73,7 @@ Underlying tools if you need one directly: `sail php ./vendor/bin/pint` (formatt
 - Releases `develop → main` use a **merge commit** (never squash — a squashed release causes recurring main/develop conflicts).
 - Both `develop` and `main` receive PRs; CI runs on PRs to either.
 
-**Migration in progress** — bringing CI to parity with fototobares. Done: shared composite actions `.github/actions/setup-php` / `setup-node` (single source of the PHP 8.4 / Node 22 versions); `code-quality.yml` split into `quality_backend` (Pint + PhpStan) and `quality_frontend` (Prettier + ESLint + tsc); `tests.yml` with `tests_backend` (`php artisan test`). Pending: `tests_frontend` (Vitest) and `e2e` (Playwright) jobs. Renaming a CI job means updating the branch rulesets or PRs get blocked.
+**Migration in progress** — bringing CI to parity with fototobares. Done: shared composite actions `.github/actions/setup-php` / `setup-node` (single source of the PHP 8.4 / Node 22 versions); `code-quality.yml` split into `quality_backend` (Pint + PhpStan) and `quality_frontend` (Prettier + ESLint + tsc); `tests.yml` with `tests_backend` (`php artisan test`) and `tests_frontend` (Vitest). Pending: the `e2e` (Playwright) job. Renaming a CI job means updating the branch rulesets or PRs get blocked.
 
 ## Architecture
 
