@@ -1,0 +1,53 @@
+name: Code Quality Checks
+
+on:
+  pull_request:
+    branches: [develop, main]
+  # Pushes to the long-lived branches keep the README badges reporting
+  push:
+    branches: [develop, main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality_backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Clone repo
+        uses: actions/checkout@v7
+
+      - name: ⚙️ PHP + composer
+        uses: ./.github/actions/setup-php
+
+      - name: ⚡ Setup Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: 🧹 Laravel Pint
+        run: vendor/bin/pint --test
+
+      - name: 🧹 PhpStan
+        run: vendor/bin/phpstan analyse
+
+  quality_frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Clone repo
+        uses: actions/checkout@v7
+
+      - name: ⚙️ Node.js + npm
+        uses: ./.github/actions/setup-node
+
+      - name: ✨ Prettier
+        run: npm run format:check
+
+      - name: 🔍 ESLint
+        run: npm run lint -- --max-warnings=0
+
+      - name: 🛠️ TypeScript checks
+        run: npm run types
